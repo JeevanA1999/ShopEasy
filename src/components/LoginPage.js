@@ -41,11 +41,11 @@ export const LoginPage = () => {
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       }}
     >
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" sx={{ p: 2 }}>
         <Paper
           elevation={24}
           sx={{
-            p: 6,
+            p: 2,
             borderRadius: 4,
             textAlign: 'center',
             backdropFilter: 'blur(20px)',
@@ -60,7 +60,7 @@ export const LoginPage = () => {
             Select your account to continue
           </Typography>
 
-          <Grid container spacing={2} sx={{ mb: 4 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             {users.map((user) => (
               <Grid item xs={6} key={user.id}>
                 <Card
@@ -79,8 +79,8 @@ export const LoginPage = () => {
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Avatar
                       sx={{
-                        width: 60,
-                        height: 60,
+                        width: 50,
+                        height: 50,
                         margin: '0 auto 16px',
                         bgcolor: 'primary.main',
                       }}
