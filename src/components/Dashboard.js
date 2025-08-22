@@ -271,7 +271,7 @@ export const Dashboard = ({ onProductClick, onCartClick, cartItemsCount }) => {
               />
             </Grid>
             <Grid item xs={12} md={4}>
-              <FormControl fullWidth>
+              <FormControl sx={{ minWidth: 200 }} fullWidth>
                 <InputLabel>Category</InputLabel>
                 <Select
                   value={categoryFilter}
@@ -309,7 +309,7 @@ export const Dashboard = ({ onProductClick, onCartClick, cartItemsCount }) => {
 
     
         <Paper elevation={3}>
-          <DataGrid
+          {/* <DataGrid
             rows={products}
             columns={columns}
             loading={loading}
@@ -326,7 +326,7 @@ export const Dashboard = ({ onProductClick, onCartClick, cartItemsCount }) => {
             slotProps={{
               toolbar: { showQuickFilter: false },
             }}
-            sx={{
+            sx={{ 
               height: 700,
               '& .MuiDataGrid-cell': {
                 display: 'flex',
@@ -336,7 +336,48 @@ export const Dashboard = ({ onProductClick, onCartClick, cartItemsCount }) => {
                 backgroundColor: 'action.hover',
               },
             }}
-          />
+          /> */}
+          <DataGrid
+  rows={products}
+  columns={columns}
+  loading={loading}
+  paginationMode="server"
+  rowCount={totalRows}
+  paginationModel={paginationModel}
+  onPaginationModelChange={setPaginationModel}
+  pageSizeOptions={[10, 20, 50, 100]}
+  sortingMode="client"
+  sortModel={sortModel}
+  onSortModelChange={setSortModel}
+  disableRowSelectionOnClick
+  slots={{ toolbar: GridToolbar }}
+  slotProps={{
+    toolbar: { showQuickFilter: false },
+  }}
+  sx={{ 
+    height: 700,
+    '& .MuiDataGrid-row': {
+      margin: '6px 0', // Vertical spacing between rows
+      borderRadius: '8px', // Rounded corners for rows
+      '&:hover': {
+        backgroundColor: 'action.hover',
+      },
+    },
+    '& .MuiDataGrid-cell': {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '12px 16px', // Padding inside each cell
+      border: 'none', // Remove default borders
+    },
+    '& .MuiDataGrid-columnHeader': {
+      padding: '16px', // Header padding to match cells
+      backgroundColor: 'background.paper',
+    },
+    '& .MuiDataGrid-virtualScroller': {
+      padding: '0 8px', // Add padding to the scroll container
+    },
+  }}
+/>
         </Paper>
       </Container>
 
