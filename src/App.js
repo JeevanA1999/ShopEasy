@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React, { useState } from 'react';
+import { AppThemeProvider } from "./contexts_ providers/AppThemeProvider";
+import { AuthProvider } from "./contexts_ providers/AuthProvider";
+import { useAuth } from './contexts/AuthContext';
+import { LoginPage, Dashboard, ProductDetailsPage, CartPage } from "./components";
+
+const AppContent = () => {
+  const { currentUser } = useAuth();
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const cartItemsCount = useAuth().getCartItemsCount();
+
+  
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setCurrentView('productDetails');
+  };
+
+  const handleCartClick = () => {
+    setCurrentView('cart');
+  };
+
+  const handleBackToDashboard = () => {
+    setCurrentView('dashboard');
+    setSelectedProduct(null);
+  };
+
+ 
+  if (!currentUser) {
+    return <LoginPage />;
+  }
+
+
+  switch (currentView) {
+    case 'productDetails':
+      return (
+        <ProductDetailsPage
+          product={selectedProduct}
+          onBack={handleBackToDashboard}
+          onCartClick={handleCartClick}
+          cartItemsCount={cartItemsCount}
+        />
+      );
+    case 'cart':
+      return (
+        <CartPage
+          onBack={handleBackToDashboard}
+          onCartClick={handleCartClick}
+          cartItemsCount={cartItemsCount}
+        />
+      );
+    default:
+      return (
+        <Dashboard
+          onProductClick={handleProductClick}
+          onCartClick={handleCartClick}
+          cartItemsCount={cartItemsCount}
+        />
+      );
+  }
+};
+
+
+export default function EcommerceApp() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </AppThemeProvider>
   );
 }
-
-export default App;
